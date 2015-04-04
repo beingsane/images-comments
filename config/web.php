@@ -31,6 +31,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\modules\user\models\user',
+            'loginUrl' => ['user/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

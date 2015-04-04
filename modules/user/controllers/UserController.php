@@ -7,12 +7,22 @@ use yii\web\Controller;
 use app\modules\user\models\LoginForm;
 use app\modules\user\models\RegistrationForm;
 use app\modules\user\models\User;
+use yii\filters\AccessControl;
 
 class UserController extends Controller
 {
-    public function actionIndex()
+    public function behaviors()
     {
-        $this->actionShowProfile();
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    ['allow' => true, 'actions' => ['login', 'register'], 'roles' => ['?']],
+                    ['allow' => true, 'actions' => ['logout', 'profile'], 'roles' => ['@']],
+                    ['allow' => true, 'actions' => ['confirm'], 'roles' => ['?', '@']],
+                ]
+            ],
+        ];
     }
     
     public function actionLogin()
