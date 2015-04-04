@@ -5,7 +5,18 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'name' => 'Тестовый сайт',
+    'language' => 'ru',
+    'sourceLanguage' => 'ru',
+    'bootstrap' => [
+        'log',
+        'app\modules\user\Bootstrap'
+    ],
+    'modules' => [
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
+    ],
     'components' => [
         'urlManager' => [
 			'enablePrettyUrl' => true,
@@ -19,8 +30,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'app\modules\user\models\user',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
