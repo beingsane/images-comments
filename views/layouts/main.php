@@ -34,10 +34,9 @@ AppAsset::register($this);
             ]);
             
             $items = [
-                ['label' => 'Главная', 'url' => ['/site/index']],
-                ['label' => 'О компании', 'url' => ['/site/about']],
-                ['label' => 'Контакты', 'url' => ['/site/contact']],
+                ['label' => 'Галерея', 'url' => ['/site/gallery']],
             ];
+            
             if(Yii::$app->user->isGuest)
             {
                 $items[] = ['label' => 'Вход', 'url' => ['/user/login']];

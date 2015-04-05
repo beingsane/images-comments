@@ -6,6 +6,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'name' => 'Тестовый сайт',
+    'defaultRoute' => 'site',
     'language' => 'ru',
     'sourceLanguage' => 'ru',
     'bootstrap' => [
