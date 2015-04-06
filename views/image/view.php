@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             <div>
                 <div class="rating">
-                    Рейтинг: <?= number_format($model->getAvgRating(), 1) ?>
+                    Рейтинг: <?= $model->getAvgRating() ?>
                 </div>
                 <div class="author">
                     Загрузил: <?= Html::encode($model->user->name) ?>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="clearfix"></div>
             </div>
 
-            <?php if(!\Yii::$app->user->isGuest && \Yii::$app->user->identity->id == $model->user_id) { ?>
+            <?php if (!\Yii::$app->user->isGuest && \Yii::$app->user->identity->id == $model->user_id) { ?>
             
                 <div class="text-right">
                     <?php
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
             <?php } ?>
             
-            <?php if($model->description) { ?>
+            <?php if ($model->description) { ?>
                 <div class="description">
                     <?= Html::encode($model->description) ?>
                 </div>
@@ -56,3 +56,34 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
+
+
+<?php if (count($model->imageComments) > 0) { ?>
+
+    <h4>Комментарии:</h4>
+    
+    <div class="image_comment_container">
+    
+    <?php foreach ($model->imageComments as $comment) { ?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="image_comment">
+                    <div class="user_info">
+                        <?= Html::encode( ($comment->user != null ? $comment->user->name : $comment->user_name) ) ?>
+                        (<?= Html::encode( ($comment->user != null ? $comment->user->email : $comment->user_email) ) ?>)
+                    </div>
+                    <div class="rating">
+                        Рейтинг: <?= $comment->rating ?>
+                    </div>
+                    <div class="comment_text">
+                        <?= Html::encode($comment->text) ?>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    
+    </div>
+    
+<?php } ?>

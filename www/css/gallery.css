@@ -15,6 +15,7 @@
     margin-bottom: 2px;
 }
 
+
 .image_detail_view, .image_detail_view > div {
     margin-bottom: 10px;
 }
@@ -40,3 +41,45 @@
     border-bottom: 1px solid #ccc;
     padding: 10px 4px;
 }
+
+.image_comment_container {
+    border: 2px solid #ccc;
+    border-bottom: 0px;
+    border-radius: 4px;
+}
+
+.image_comment {
+    border-bottom: 2px solid #ccc;
+}
+
+.image_comment .comment_text {
+    padding: 4px;
+}
+
+.image_comment .user_info,
+.image_comment .rating,
+.image_comment .comment_text {
+    float: left;
+    padding: 4px 8px;
+}
+
+.image_comment .user_info,
+.image_comment .rating {
+    background: #f0f0f0;
+    border-right: 1px solid #ccc;
+}
+
+.image_comment .user_info {
+    min-width: 320px;
+}
+
+.image_comment .rating {
+    min-width: 90px;
+}
+.image_comment .comment_text {
+    padding: 4px 8px;
+}
+
+
+
+
