@@ -67,19 +67,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($model->imageComments as $comment) { ?>
         <div class="row">
             <div class="col-md-12">
-                <div class="image_comment">
-                    <div class="user_info">
+                <table class="image_comment">
+                <tr>
+                    <td class="user_info">
                         <?= Html::encode( ($comment->user != null ? $comment->user->name : $comment->user_name) ) ?>
                         (<?= Html::encode( ($comment->user != null ? $comment->user->email : $comment->user_email) ) ?>)
-                    </div>
-                    <div class="rating">
+                    </td>
+                    <td class="rating">
                         Рейтинг: <?= $comment->rating ?>
-                    </div>
-                    <div class="comment_text">
+                    </td>
+                    <td class="comment_text">
                         <?= Html::encode($comment->text) ?>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+                    </td>
+                </tr>
+                </table>
             </div>
         </div>
     <?php } ?>
