@@ -36,8 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                     
                     <div class="col-md-<?= (int)(12 / $columnCount) ?>">
-                        <div class="gallery_image">
-                            <div class="text-center">
+                        <div class="gallery_image text-center">
+                            <div class="image_link">
                                 <a href="/image/view/?id=<?= $image['id'] ?>" data-pjax="0">
                                     <img src="<?= Image::$thumbnailURL .$image['path'] ?>"/>
                                 </a>
