@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use app\models\Image;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Image */
@@ -58,33 +59,33 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 
+<?php Pjax::begin(); ?>
 <?php if (count($model->imageComments) > 0) { ?>
 
-    <h4>Комментарии:</h4>
-    
-    <div class="image_comment_container">
-    
-    <?php foreach ($model->imageComments as $comment) { ?>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="image_comment">
-                <tr>
-                    <td class="user_info">
-                        <?= Html::encode( ($comment->user != null ? $comment->user->name : $comment->user_name) ) ?>
-                        (<?= Html::encode( ($comment->user != null ? $comment->user->email : $comment->user_email) ) ?>)
-                    </td>
-                    <td class="rating">
-                        Рейтинг: <?= $comment->rating ?>
-                    </td>
-                    <td class="comment_text">
-                        <?= Html::encode($comment->text) ?>
-                    </td>
-                </tr>
-                </table>
-            </div>
-        </div>
-    <?php } ?>
-    
+<div class="row">
+    <div class="col-md-12">
+        <h4>Комментарии:</h4>
+        
+        <?php
+            $dataProvider = new yii\data\ActiveDataProvider([
+                'query' => $model->getImageComments(),
+                'pagination' => array('pageSize' => 20),
+            ]);
+            echo yii\widgets\ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemView' => '_comment',
+                'layout' => "{summary}\n<div class=\"image_comment_container\">{items}</div>\n{pager}"
+            ]);
+        ?>
+        
+        <?php
+            echo Html::button('Добавить комментарий', [
+                'id' => 'add_comment',
+                'class' => 'btn btn-success',
+            ]);
+        ?>
     </div>
+</div>
     
 <?php } ?>
+<?php Pjax::end(); ?>

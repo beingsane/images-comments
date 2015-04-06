@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use app\models\Image;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ImageSearch */
@@ -19,10 +20,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+    <?php Pjax::begin(); ?>
     <?php
         if(count($images) > 0)
         {
             ?>
+            
             <div class="row">
             
                 <?php foreach($images as $rowNum => $image) { ?>
@@ -35,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-<?= (int)(12 / $columnCount) ?>">
                         <div class="gallery_image">
                             <div class="text-center">
-                                <a href="/image/view/?id=<?= $image['id'] ?>">
+                                <a href="/image/view/?id=<?= $image['id'] ?>" data-pjax="0">
                                     <img src="<?= Image::$thumbnailURL .$image['path'] ?>"/>
                                 </a>
                             </div>
@@ -51,4 +54,5 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
         }
     ?>
+    <?php Pjax::end(); ?>
 </div>

@@ -15,6 +15,7 @@ use app\modules\user\models\User;
  * @property string $user_name
  * @property string $user_email
  * @property string $text
+ * @property string $created_at
  *
  * @property Image $image
  * @property User $user

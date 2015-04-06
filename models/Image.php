@@ -72,7 +72,7 @@ class Image extends \yii\db\ActiveRecord
      */
     public function getImageComments()
     {
-        return $this->hasMany(ImageComment::className(), ['image_id' => 'id']);
+        return $this->hasMany(ImageComment::className(), ['image_id' => 'id'])->orderBy('id DESC');
     }
     
     public function getAvgRating()

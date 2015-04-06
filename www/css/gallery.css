@@ -47,6 +47,7 @@
     border: 2px solid #ccc;
     border-bottom: 0px;
     border-radius: 4px;
+    margin-bottom: 20px;
 }
 
 .image_comment {
@@ -58,6 +59,8 @@
     padding: 4px;
 }
 
+
+.image_comment .comment_date,
 .image_comment .user_info,
 .image_comment .rating,
 .image_comment .comment_text {
@@ -65,10 +68,15 @@
     vertical-align: top;
 }
 
+.image_comment .comment_date,
 .image_comment .user_info,
 .image_comment .rating {
     background: #f0f0f0;
     border-right: 1px solid #ccc;
+}
+
+.image_comment .comment_date {
+    width: 140px;
 }
 
 .image_comment .user_info {
