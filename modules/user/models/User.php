@@ -12,7 +12,6 @@ use app\modules\user\models\Mailer;
  * This is the model class for table "user".
  *
  * @property integer $id
- * @property string $login
  * @property string $email
  * @property string $password_hash
  * @property string $name
@@ -37,10 +36,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $i = 0;
         return [
-            [['login', 'email'], 'required'],
-            [['login', 'email'], 'string', 'max' => 100],
+            [['email'], 'required'],
+            [['email'], 'string', 'max' => 100],
             [['name'], 'string', 'max' => 1024],
-            [['login'], 'unique'],
             [['email'], 'unique'],
             [['password'], 'safe'],
             [['registration_code'], 'safe'],
@@ -54,7 +52,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             'id' => 'ID',
-            'login' => 'Логин',
             'email' => 'Email',
             'name' => 'Имя',
             'password_hash' => 'Password Hash',
@@ -62,9 +59,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
     
-    public static function findByLoginOrEmail($loginOrEmail)
+    public static function findByEmail($email)
     {
-        return static::find()->where(['login' => $loginOrEmail])->orWhere(['email' => $loginOrEmail])->one();
+        return static::find()->where(['email' => $email])->one();
     }
     
     

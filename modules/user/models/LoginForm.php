@@ -7,7 +7,7 @@ use yii\base\Model;
 
 class LoginForm extends Model
 {
-    public $login;
+    public $email;
     public $password;
     public $rememberMe = true;
 
@@ -17,7 +17,7 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'login'      => 'Логин',
+            'email'      => 'Email',
             'password'   => 'Пароль',
             'rememberMe' => 'Запомнить',
         ];
@@ -26,7 +26,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['login', 'password'], 'required'],
+            [['email', 'password'], 'required'],
+            [['email'], 'email'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
         ];
@@ -56,9 +57,9 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByLoginOrEmail($this->login);
+            $this->_user = User::findByEmail($this->email);
         }
-
+        
         return $this->_user;
     }
 }

@@ -16,10 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $user->name ?></td>
             </tr>
             <tr>
-                <th class="text-right">Логин:</th>
-                <td><?= $user->login ?></td>
-            </tr>
-            <tr>
                 <th class="text-right">Email:</th>
                 <td><?= $user->email ?></td>
             </tr>

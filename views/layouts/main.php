@@ -47,7 +47,7 @@ AppAsset::register($this);
                 $items[] = ['label' => 'Загрузить изображение', 'url' => ['/image/upload']];
                 $items[] = ['label' => 'Профиль', 'url' => ['/user/profile/'.Yii::$app->user->identity->id]];
                 $items[] = [
-                    'label' => 'Выход (' . Yii::$app->user->identity->login . ')',
+                    'label' => 'Выход (' . Yii::$app->user->identity->name . ')',
                     'url' => ['/user/logout'],
                     'linkOptions' => ['data-method' => 'post']
                 ];
