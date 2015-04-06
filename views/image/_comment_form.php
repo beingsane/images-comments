@@ -19,10 +19,10 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'user_email')->textInput(['maxlength' => 100]) ?>
     <?php } ?>
     
-    <?= $form->field($model, 'text')->textarea(['maxlength' => 2048]) ?>
+    <?= $form->field($model, 'text')->textarea(['maxlength' => 2048])->label('Текст комментария') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Добавить комментарий', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton('Добавить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

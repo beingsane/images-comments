@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Галерея', 'url' => ['index'
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+
 <div class="row">
 
     <div class="col-md-12">
@@ -60,29 +61,34 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 
-<?php Pjax::begin(); ?>
 <?php if (count($model->imageComments) > 0) { ?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Комментарии:</h4>
+            
+            <?php Pjax::begin(); ?>
+            <?php
+                $dataProvider = new yii\data\ActiveDataProvider([
+                    'query' => $model->getImageComments(),
+                    'pagination' => array('pageSize' => 20),
+                ]);
+                echo yii\widgets\ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'itemView' => '_comment',
+                    'layout' => "{summary}\n<div class=\"image_comment_container\">{items}</div>\n{pager}"
+                ]);
+            ?>
+            <?php Pjax::end(); ?>
+            
+        </div>
+    </div>
+
+<?php } ?>
+
 
 <div class="row">
     <div class="col-md-12">
-        <h4>Комментарии:</h4>
-        
-        <?php
-            $dataProvider = new yii\data\ActiveDataProvider([
-                'query' => $model->getImageComments(),
-                'pagination' => array('pageSize' => 20),
-            ]);
-            echo yii\widgets\ListView::widget([
-                'dataProvider' => $dataProvider,
-                'itemView' => '_comment',
-                'layout' => "{summary}\n<div class=\"image_comment_container\">{items}</div>\n{pager}"
-            ]);
-        ?>
-        
         <?php echo $this->render('_comment_form.php', ['model' => $commentModel]) ?>
-        
     </div>
 </div>
-    
-<?php } ?>
-<?php Pjax::end(); ?>

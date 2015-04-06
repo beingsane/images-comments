@@ -15,8 +15,11 @@
     margin-bottom: 2px;
 }
 
+.image_detail_view {
+    margin-bottom: 30px;
+}
 
-.image_detail_view, .image_detail_view > div {
+.image_detail_view > div {
     margin-bottom: 10px;
 }
 

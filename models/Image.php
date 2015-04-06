@@ -85,6 +85,6 @@ class Image extends \yii\db\ActiveRecord
             ->where(['image_id' => $this->id])
             ->one();
         
-        return number_format($row->avg_rating, 1);
+        return number_format($row['avg_rating'], 1);
     }
 }
