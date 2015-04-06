@@ -22,8 +22,10 @@ class ImageController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => true, 'actions' => ['upload', 'delete'], 'roles' => ['@']],
                     ['allow' => true, 'actions' => ['index', 'gallery', 'view'], 'roles' => ['?', '@']],
+                    ['allow' => true, 'actions' => ['upload'], 'roles' => ['@']],
+                    // можно было настроить RBAC, но здесь с использованием matchCallback получается проще и быстрее
+                    ['allow' => true, 'actions' => ['delete'], 'roles' => ['@'], 'matchCallback' => [$this, 'isOwner']],
                 ],
             ],
             'verbs' => [
@@ -87,7 +89,6 @@ class ImageController extends Controller
 
     /**
      * Creates a new Image model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionUpload()
@@ -111,10 +112,33 @@ class ImageController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(\Yii::$app->user->identity->id != $model->user_id)
+        {
+            throw new \yii\web\ForbiddenHttpException('Вы не являетесь владельцем этого изображения');
+        }
+        
+        $model->delete();
 
         return $this->redirect(['index']);
     }
+    
+    /**
+     * Функция проверки, является ли пользователь владельцем модели
+     * используется в правилах доступа
+     */
+    public function isOwner($rule, $action)
+    {
+        $get = \Yii::$app->request->get();
+        $model = $this->findModel($get['id']);
+        if(\Yii::$app->user->identity->id == $model->user_id)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
 
     /**
      * Finds the Image model based on its primary key value.
