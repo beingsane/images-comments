@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Image */
 
 $this->title = 'Create Image';
-$this->params['breadcrumbs'][] = ['label' => 'Images', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Галерея', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="image-create">

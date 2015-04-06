@@ -8,6 +8,8 @@ use app\models\ImageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
+use yii\filters\AccessControl;
 
 /**
  * ImageController implements the CRUD actions for Image model.
@@ -17,6 +19,13 @@ class ImageController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    ['allow' => true, 'actions' => ['upload', 'delete'], 'roles' => ['@']],
+                    ['allow' => true, 'actions' => ['index', 'gallery', 'view'], 'roles' => ['?', '@']],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -26,18 +35,41 @@ class ImageController extends Controller
         ];
     }
 
-    /**
-     * Lists all Image models.
-     * @return mixed
-     */
     public function actionIndex()
     {
-        $searchModel = new ImageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->actionGallery();
+    }
+    
+    public function actionGallery()
+    {
+        $query = new \yii\db\Query();
+        
+        // в дальнейшем для ускорения работы можно вынести средний рейтинг
+        // в отдельное поле таблицы image и обновлять при добавлении комментариев
+        $query
+            ->select(['image.id', 'image.user_id', 'image.path', 'IFNULL(AVG(image_comment.rating), 0) AS avg_rating'])
+            ->from('image')
+            ->join('LEFT JOIN', 'image_comment', 'image_comment.image_id = image.id')
+            ->groupBy('image.id')
+            ->orderBy('avg_rating DESC, image.id');
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $columnCount = 6;
+        $rowCount = 2;
+        $pagination = new Pagination([
+            'defaultPageSize' => $columnCount * $rowCount,
+            'totalCount' => Image::find()->count(),
+        ]);
+        
+        $images = $query
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('gallery', [
+            'columnCount' => $columnCount,
+            'rowCount' => $rowCount,
+            'images' => $images,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -58,7 +90,7 @@ class ImageController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionUpload()
     {
         $model = new Image();
 
@@ -70,26 +102,7 @@ class ImageController extends Controller
             ]);
         }
     }
-
-    /**
-     * Updates an existing Image model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
+    
     /**
      * Deletes an existing Image model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

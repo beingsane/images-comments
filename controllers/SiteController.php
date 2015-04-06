@@ -14,13 +14,6 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            /*
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    ['allow' => true, 'actions' => ['uploadPhotos'], 'roles' => ['@']],
-                ],
-            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -45,13 +38,6 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->actionGallery();
+        return $this->render('index');
     }
-    
-    public function actionGallery()
-    {
-        return $this->render('gallery');
-    }
-    
-    //uploadPhotos
 }

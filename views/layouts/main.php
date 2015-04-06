@@ -34,7 +34,7 @@ AppAsset::register($this);
             ]);
             
             $items = [
-                ['label' => 'Галерея', 'url' => ['/site/gallery']],
+                ['label' => 'Галерея', 'url' => ['/image/gallery']],
             ];
             
             if(Yii::$app->user->isGuest)
@@ -44,7 +44,8 @@ AppAsset::register($this);
             }
             else
             {
-                $items[] = ['label' => 'Профиль', 'url' => ['/user/'.Yii::$app->user->identity->id]];
+                $items[] = ['label' => 'Загрузить изображение', 'url' => ['/image/upload']];
+                $items[] = ['label' => 'Профиль', 'url' => ['/user/profile/'.Yii::$app->user->identity->id]];
                 $items[] = [
                     'label' => 'Выход (' . Yii::$app->user->identity->login . ')',
                     'url' => ['/user/logout'],
