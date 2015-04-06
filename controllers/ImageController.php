@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Image;
-use app\models\ImageSearch;
+use app\models\ImageComment;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -82,8 +82,17 @@ class ImageController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $commentModel = new ImageComment();
+
+        $commentModel->image_id = $id;
+        if ($commentModel->load(Yii::$app->request->post()) && $commentModel->save()) {
+            return $this->refresh();
+        }
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'commentModel' => $commentModel,
         ]);
     }
 
@@ -113,15 +122,15 @@ class ImageController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if(\Yii::$app->user->identity->id != $model->user_id)
+        foreach($model->imageComments as $comment)
         {
-            throw new \yii\web\ForbiddenHttpException('Вы не являетесь владельцем этого изображения');
+            $comment->delete();
         }
-        
         $model->delete();
 
         return $this->redirect(['index']);
     }
+    
     
     /**
      * Функция проверки, является ли пользователь владельцем модели

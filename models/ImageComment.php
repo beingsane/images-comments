@@ -40,7 +40,12 @@ class ImageComment extends \yii\db\ActiveRecord
             [['image_id', 'rating', 'user_id'], 'integer'],
             [['user_name'], 'string', 'max' => 1024],
             [['user_email'], 'string', 'max' => 100],
-            [['text'], 'string', 'max' => 2048]
+            [['user_email'], 'email'],
+            [['text'], 'string', 'max' => 2048],
+            
+            [['user_name', 'user_email'], 'required', 'when' => function($model) {
+                return Yii::$app->user->isGuest;
+            }]
         ];
     }
 
@@ -52,11 +57,11 @@ class ImageComment extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'image_id' => 'Image ID',
-            'rating' => 'Rating',
+            'rating' => 'Рейтинг',
             'user_id' => 'User ID',
-            'user_name' => 'User Name',
-            'user_email' => 'User Email',
-            'text' => 'Text',
+            'user_name' => 'Имя',
+            'user_email' => 'Email',
+            'text' => 'Текст',
         ];
     }
 
@@ -74,5 +79,31 @@ class ImageComment extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    
+    public function beforeSave($insert)
+    {
+        if ($this->image_id == 0)
+        {
+            return false;
+        }
+        
+        if (Yii::$app->user->isGuest)
+        {
+            if(!$this->user_name || !$this->user_email)
+            {
+                return false;
+            }
+            
+            $this->user_id = null;
+        }
+        else
+        {
+            $this->user_id = Yii::$app->user->identity->id;
+            $this->user_name = null;
+            $this->user_email = null;
+        }
+        
+        return true;
     }
 }

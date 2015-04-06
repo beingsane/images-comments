@@ -73,6 +73,7 @@
 .image_comment .rating {
     background: #f0f0f0;
     border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .image_comment .comment_date {
@@ -80,7 +81,7 @@
 }
 
 .image_comment .user_info {
-    width: 400px;
+    min-width: 400px;
 }
 
 .image_comment .rating {
@@ -90,6 +91,10 @@
     padding: 4px 8px;
 }
 
+
+.image-comment-form {
+    max-width: 400px;
+}
 
 
 

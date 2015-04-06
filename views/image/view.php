@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use app\models\Image;
 use yii\widgets\Pjax;
+use app\models\Image;
+use app\models\ImageComment;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Image */
@@ -78,12 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
         ?>
         
-        <?php
-            echo Html::button('Добавить комментарий', [
-                'id' => 'add_comment',
-                'class' => 'btn btn-success',
-            ]);
-        ?>
+        <?php echo $this->render('_comment_form.php', ['model' => $commentModel]) ?>
+        
     </div>
 </div>
     
