@@ -22,7 +22,6 @@ class AppAsset extends AssetBundle
         'css/gallery.css',
     ];
     public $js = [
-        'js/gallery.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
