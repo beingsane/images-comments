@@ -104,6 +104,6 @@ class ImageComment extends \yii\db\ActiveRecord
             $this->user_email = null;
         }
         
-        return parent::beforeSave();;
+        return parent::beforeSave($insert);
     }
 }
