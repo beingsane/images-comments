@@ -13,6 +13,7 @@ class Bootstrap implements BootstrapInterface
             '<action:(login|logout|register)>' => 'user/<action>',
             '<action:confirm>/<id:\d+>/<code:.+>' => 'user/confirm',
             '<id:\d+>' => 'user/profile',
+            '<action:profile>/<id:\d+>' => 'user/profile',
         ];
         $configUrlRule = [
             'prefix'  => 'user',
