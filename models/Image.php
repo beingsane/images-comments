@@ -101,21 +101,6 @@ class Image extends \yii\db\ActiveRecord
         return number_format($row['avg_rating'], 1);
     }
     
-    public function checkImage($attribute, $params)
-    {
-        /*
-        $image = UploadedFile::getInstance($this, 'image_file');
-        if (!$image)
-        {
-            $this->addError($attribute, 'Произошла ошибка при загрузке файла');
-            return false;
-        }
-        Image::thumbnail('@webroot/img/test-image.jpg', 120, 120)
-            ->save(Yii::getAlias('@runtime/thumb-test-image.jpg'), ['quality' => 50]);
-        $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
-        */
-    }
-    
     public function beforeSave($insert)
     {
         $file = UploadedFile::getInstance($this, 'image_file');
